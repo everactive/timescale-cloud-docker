@@ -4,19 +4,19 @@ FROM timescale/timescaledb:latest-pg12 AS base
 ENV POSTGRES_DB defaultdb
 ENV POSTGRES_PASSWORD password
 
-ENV PG_CRON_VERSION 1.2.0
+ENV PG_CRON_VERSION 1.3.1
 
 
 # build pgextwlist
 FROM base AS pgextwlist
 
 RUN apk update && apk add --no-cache --virtual .deps \
-        git \
-        make \
-        gcc \
-        musl-dev \
-        clang \
-        llvm \
+    git \
+    make \
+    gcc \
+    musl-dev \
+    clang \
+    llvm \
     && git clone https://github.com/dimitri/pgextwlist.git \
     && cd pgextwlist \
     && make \
@@ -28,11 +28,11 @@ RUN apk update && apk add --no-cache --virtual .deps \
 FROM base AS pg_cron
 
 RUN apk update && apk add --no-cache --virtual .deps \
-        build-base \
-        ca-certificates \
-        clang-dev llvm10 \
-        openssl \
-        tar \
+    build-base \
+    ca-certificates \
+    clang-dev llvm11 \
+    openssl \
+    tar \
     && wget -O /pg_cron.tgz https://github.com/citusdata/pg_cron/archive/v$PG_CRON_VERSION.tar.gz \
     && tar xvzf /pg_cron.tgz \
     && cd pg_cron-$PG_CRON_VERSION \
