@@ -30,7 +30,7 @@ FROM base AS pg_cron
 RUN apk update && apk add --no-cache --virtual .deps \
     build-base \
     ca-certificates \
-    clang-dev llvm11 \
+    clang-dev llvm12 \
     openssl \
     tar \
     && wget -O /pg_cron.tgz https://github.com/citusdata/pg_cron/archive/v$PG_CRON_VERSION.tar.gz \
